@@ -1,6 +1,7 @@
 ﻿// Carga, filtrado y renderizado de productos desde JSON para páginas de inicio, catálogo y detalle.
 // Acepta URL completa, ID de Apps Script o ruta local.
 const RUTA_PRODUCTOS_JSON = 'https://script.google.com/macros/s/AKfycbxffb-Q5susUJokchpi3h72d7HoA63Vi9lv6nho2yl3nKzXtw_atHaC3sOmi1nxiKh_/exec';
+const IMAGEN_PLACEHOLDER = 'https://placehold.co/800x600/e2e8f0/64748b?text=Sin+Imagen';
 
 async function cargarProductos() {
   try {
@@ -57,11 +58,12 @@ function crearTarjetaProducto(producto) {
   const certificaciones = Array.isArray(producto.certificaciones)
     ? producto.certificaciones.slice(0, 2).join(' · ')
     : 'Sin certificaciones registradas';
+  const imagenProducto = normalizarUrlImagen(producto.imagen_url);
 
   return `
     <article class="flex h-full flex-col rounded-lg border border-slate-200 bg-white shadow-sm transition hover:shadow-md">
       <a href="producto-detalle.html?id=${encodeURIComponent(producto.id)}" class="block overflow-hidden rounded-t-lg">
-        <img src="${producto.imagen_url || 'images/productos/sin-imagen.png'}" alt="${escapeHtml(producto.nombre)}" class="h-48 w-full object-cover" loading="lazy" />
+        <img src="${imagenProducto}" alt="${escapeHtml(producto.nombre)}" class="h-48 w-full object-cover" loading="lazy" onerror="this.onerror=null;this.src='${IMAGEN_PLACEHOLDER}'" />
       </a>
       <div class="flex flex-1 flex-col p-4">
         <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">${escapeHtml(producto.marca)} · ${escapeHtml(producto.modelo)}</p>
@@ -198,19 +200,20 @@ function inicializarPaginaDetalle() {
       return;
     }
 
-    const imagenes = Array.isArray(producto.imagenes) && producto.imagenes.length
+    const imagenesBase = Array.isArray(producto.imagenes) && producto.imagenes.length
       ? producto.imagenes
-      : [producto.imagen_url || 'images/productos/sin-imagen.png'];
+      : [producto.imagen_url];
+    const imagenes = imagenesBase.map((url) => normalizarUrlImagen(url));
 
     contenedor.innerHTML = `
       <div class="grid gap-8 lg:grid-cols-2">
         <div>
-          <img src="${imagenes[0]}" alt="${escapeHtml(producto.nombre)}" class="h-80 w-full rounded-lg object-cover" />
+          <img src="${imagenes[0]}" alt="${escapeHtml(producto.nombre)}" class="h-80 w-full rounded-lg object-cover" onerror="this.onerror=null;this.src='${IMAGEN_PLACEHOLDER}'" />
           <div class="mt-3 grid grid-cols-3 gap-3">
             ${imagenes
               .map(
                 (img) =>
-                  `<img src="${img}" alt="${escapeHtml(producto.nombre)}" class="h-24 w-full rounded border border-slate-200 object-cover" />`
+                  `<img src="${img}" alt="${escapeHtml(producto.nombre)}" class="h-24 w-full rounded border border-slate-200 object-cover" onerror="this.onerror=null;this.src='${IMAGEN_PLACEHOLDER}'" />`
               )
               .join('')}
           </div>
@@ -270,6 +273,35 @@ function escapeHtml(texto) {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#039;');
+}
+
+function normalizarUrlImagen(url) {
+  const valor = String(url || '').trim();
+  if (!valor) return IMAGEN_PLACEHOLDER;
+
+  if (valor.startsWith('http://') || valor.startsWith('https://')) {
+    const idDrive = extraerIdDrive(valor);
+    if (idDrive) {
+      return `https://drive.google.com/thumbnail?id=${idDrive}&sz=w1600`;
+    }
+    return valor;
+  }
+
+  if (valor.startsWith('/') || valor.startsWith('images/')) {
+    return valor;
+  }
+
+  return IMAGEN_PLACEHOLDER;
+}
+
+function extraerIdDrive(url) {
+  const fromFilePath = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+  if (fromFilePath) return fromFilePath[1];
+
+  const fromQuery = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+  if (fromQuery) return fromQuery[1];
+
+  return '';
 }
 
 window.cargarProductos = cargarProductos;
