@@ -1,0 +1,39 @@
+﻿backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "catalogo"
+    label: "Catálogo"
+    files:
+      - label: "Productos"
+        name: "productos"
+        file: "data/productos.json"
+        format: "json"
+        fields:
+          - label: "Productos"
+            name: "productos"
+            widget: "list"
+            summary: "{{fields.nombre}} - {{fields.marca}}"
+            fields:
+              - { label: "ID", name: "id", widget: "string" }
+              - { label: "Nombre", name: "nombre", widget: "string" }
+              - { label: "Marca", name: "marca", widget: "string" }
+              - { label: "Modelo", name: "modelo", widget: "string" }
+              - { label: "Descripción", name: "descripcion", widget: "text" }
+              - { label: "Material", name: "material", widget: "string" }
+              - { label: "Tamaños", name: "tamanos", widget: "string" }
+              - { label: "Conexión", name: "conexion", widget: "string" }
+              - { label: "Presión", name: "presion", widget: "string" }
+              - { label: "Temperatura", name: "temperatura", widget: "string" }
+              - label: "Certificaciones"
+                name: "certificaciones"
+                widget: "list"
+                field: { label: "Certificación", name: "certificacion", widget: "string" }
+              - { label: "URL PDF", name: "pdf_url", widget: "string" }
+              - { label: "URL Imagen", name: "imagen_url", widget: "string" }
+              - { label: "Destacado", name: "destacado", widget: "boolean", default: false }
+              - { label: "Activo", name: "activo", widget: "boolean", default: true }

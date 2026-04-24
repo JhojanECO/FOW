@@ -1,0 +1,337 @@
+﻿/* ============================================
+   PALETA DE COLORES - Accesibilidad WCAG
+   ============================================ */
+:root {
+  /* Primario - Azul industrial */
+  --primary-900: #1e3a8a;  /* Azul oscuro - headers, footer */
+  --primary-700: #1d4ed8;  /* Azul medio - hover principal */
+  --primary-500: #3b82f6;  /* Azul claro - acentos */
+
+  /* Secundario - Naranja/Ámbar */
+  --accent-600: #ea580c;   /* Naranja oscuro - botones principales */
+  --accent-500: #f97316;   /* Naranja - hover botones */
+  --accent-400: #fb923c;   /* Naranja claro - acentos */
+
+  /* Neutrales - Escala de grises (contraste WCAG) */
+  --neutral-950: #0f172a;  /* Texto principal - cumple 4.5:1 */
+  --neutral-900: #1e293b;  /* Títulos */
+  --neutral-700: #334155;  /* Texto secundario */
+  --neutral-600: #475569;  /* Texto terciario */
+  --neutral-500: #64748b;  /* Placeholders */
+  --neutral-300: #cbd5e1;  /* Bordes */
+  --neutral-200: #e2e8f0;  /* Fondos alternos */
+  --neutral-100: #f1f5f9;  /* Fondos suaves */
+  --neutral-50: #f8fafc;   /* Fondo página */
+
+  /* Estados */
+  --success: #16a34a;
+  --error: #dc2626;
+  --warning: #d97706;
+}
+
+/* ============================================
+   ESTILOS BASE
+   ============================================ */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: var(--neutral-700);
+  background-color: var(--neutral-50);
+}
+
+/* Mejorar contraste de texto */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--neutral-900);
+}
+
+p {
+  color: var(--neutral-700);
+}
+
+/* Links con mejor contraste */
+a {
+  color: var(--primary-700);
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--primary-900);
+}
+
+/* ============================================
+   NAVEGACIÓN
+   ============================================ */
+.nav-link {
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+.nav-link:hover {
+  color: var(--primary-700);
+}
+
+.nav-link-active {
+  color: var(--primary-900);
+  font-weight: 700;
+}
+
+.nav-link-active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 2px;
+  background-color: var(--accent-600);
+}
+
+/* ============================================
+   BOTONES - Microinteracciones
+   ============================================ */
+
+/* Botón primario */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--accent-600);
+  color: white;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(234, 88, 12, 0.3);
+}
+
+.btn-primary:hover {
+  background-color: var(--accent-500);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(234, 88, 12, 0.4);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(234, 88, 12, 0.3);
+}
+
+/* Botón secundario */
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  background-color: transparent;
+  color: var(--primary-700);
+  font-weight: 600;
+  border-radius: 0.5rem;
+  border: 2px solid var(--primary-700);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background-color: var(--primary-700);
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(30, 58, 138, 0.2);
+}
+
+.btn-secondary:active {
+  transform: translateY(0);
+}
+
+/* Botón outline */
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  background-color: transparent;
+  color: white;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-outline:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-1px);
+}
+
+.btn-outline:active {
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(0);
+}
+
+/* ============================================
+   TARJETAS - Efectos hover
+   ============================================ */
+.card-hover {
+  transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+}
+
+/* ============================================
+   FORMULARIOS - Mejoras de contraste
+   ============================================ */
+input, textarea, select {
+  border-color: var(--neutral-300);
+  color: var(--neutral-900);
+}
+
+input:focus, textarea:focus, select:focus {
+  border-color: var(--primary-500);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+input::placeholder, textarea::placeholder {
+  color: var(--neutral-500);
+}
+
+/* ============================================
+   UTILIDADES DE CONTRASTE
+   ============================================ */
+.text-contrast-high {
+  color: var(--neutral-900);
+}
+
+.text-contrast-medium {
+  color: var(--neutral-700);
+}
+
+.bg-contrast {
+  background-color: white;
+}
+
+/* ============================================
+   ANIMACIONES SUAVES
+   ============================================ */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+/* Transiciones globales para elementos interactivos */
+a, button, input, select, textarea {
+  transition: all 0.2s ease;
+}
+
+/* ============================================
+   CLASES PERSONALIZADAS PARA TAILWIND
+   ============================================ */
+
+/* Colores industriales personalizados */
+.text-industrial-900 {
+  color: var(--primary-900);
+}
+
+.text-industrial-700 {
+  color: var(--primary-700);
+}
+
+.bg-industrial-900 {
+  background-color: var(--primary-900);
+}
+
+.hover\:text-accent-600:hover {
+  color: var(--accent-600);
+}
+
+.hover\:text-orange-600:hover {
+  color: var(--accent-600);
+}
+
+.hover\:bg-orange-700:hover {
+  background-color: var(--accent-500);
+}
+
+/* Fondos con contraste mejorado */
+.bg-slate-50 {
+  background-color: var(--neutral-50);
+}
+
+.bg-slate-100 {
+  background-color: var(--neutral-100);
+}
+
+.bg-slate-200 {
+  background-color: var(--neutral-200);
+}
+
+.bg-slate-900 {
+  background-color: var(--neutral-900);
+}
+
+/* Texto con contraste WCAG */
+.text-slate-500 {
+  color: var(--neutral-500);
+}
+
+.text-slate-600 {
+  color: var(--neutral-700);
+}
+
+.text-slate-900 {
+  color: var(--neutral-900);
+}
+
+/* Bordes mejorados */
+.border-slate-200 {
+  border-color: var(--neutral-200);
+}
+
+.border-slate-300 {
+  border-color: var(--neutral-300);
+}
+
+/* ============================================
+   MEJORAS DE INTERFAZ ADICIONALES
+   ============================================ */
+
+/* Focus visible para accesibilidad */
+*:focus-visible {
+  outline: 2px solid var(--primary-500);
+  outline-offset: 2px;
+}
+
+/* Selection de texto */
+::selection {
+  background-color: var(--primary-500);
+  color: white;
+}
+
+/* Scrollbar personalizada */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--neutral-100);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--neutral-300);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--neutral-500);
+}
