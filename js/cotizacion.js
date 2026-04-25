@@ -58,7 +58,7 @@ function insertarModalCotizacion() {
             <textarea id="modal-mensaje" name="mensaje" rows="3" class="w-full rounded border border-slate-300 px-3 py-2 text-sm"></textarea>
           </div>
 
-          <button type="submit" class="inline-flex items-center justify-center rounded bg-orange-600 px-5 py-2 text-sm font-semibold text-white hover:bg-orange-700">
+          <button type="submit" class="inline-flex items-center justify-center rounded bg-industrial-900 px-5 py-2 text-sm font-semibold text-white hover:bg-industrial-700">
             <span class="btn-label">Enviar cotización</span>
             <span class="btn-spinner ml-2 hidden h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></span>
           </button>
